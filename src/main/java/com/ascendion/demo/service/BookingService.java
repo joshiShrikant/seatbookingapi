@@ -24,4 +24,5 @@ public interface BookingService {
     List<Seat> getSeatsByFloor(Long floorId);
 
     List<Floor> getFloors();
+
 }

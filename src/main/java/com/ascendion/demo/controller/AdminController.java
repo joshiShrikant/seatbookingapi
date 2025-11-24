@@ -24,7 +24,7 @@ public class AdminController {
         this.seatRepository = seatRepository;
     }
 
-    @GetMapping("/users/getAll")
+    @GetMapping("/users/getAllUsers")
     public ResponseEntity<?> getAllUsers() {
         // Implementation to get all users
         return ResponseEntity.ok(userRepository.findAll());

@@ -22,5 +22,7 @@ public class Seat {
 
     private boolean active = true; // true if the seat is active/bookable, false if deactivated
 
-    private boolean status; // true if occupied, false if available
+    private boolean isBooked; // true if occupied, false if available
+
+    private Long bookedByUserId; // ID of the user who booked the seat
 }

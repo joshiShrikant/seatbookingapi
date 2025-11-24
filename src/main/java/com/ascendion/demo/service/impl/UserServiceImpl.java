@@ -35,6 +35,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignupResponse register(SignupRequest dto) {
         User user = new User();
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
         user.setUserName(dto.getUserName());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -50,6 +52,8 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Set.of(role));
        User dbUser =  userRepo.save(user);
         SignupResponse savedUser = new SignupResponse();
+        savedUser.setFirstName(dto.getFirstName());
+        savedUser.setLastName(dto.getLastName());
         savedUser.setId(dbUser.getId());
         savedUser.setUserName(dto.getUserName());
         savedUser.setEmail(dto.getEmail());
@@ -60,14 +64,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(LoginRequest dto) {
-        User user = userRepo.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new BadRequestException("Invalid email"));
-
+        User user = userRepo.findByUserName(dto.getUserName())
+                .orElseThrow(() -> new BadRequestException("Invalid UserName"));
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new BadRequestException("Invalid password");
         }
-
-        return jwtUtils.generateToken(user.getUserName()); // maybe through error as it is passing full name
+        return jwtUtils.generateToken(user.getUserName());
     }
 
     @Override
